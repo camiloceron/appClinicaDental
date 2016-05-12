@@ -1,3 +1,24 @@
+.go-top {
+	position: fixed;
+	bottom: 2em;
+	right: 2em;
+	text-decoration: none;
+	color: #fff;
+	background-color: rgba(0, 0, 0, 0.3);
+	font-size: 12px;
+	padding: 1em;
+	display: none;
+}
+
+.go-top:hover {
+	background-color: rgba(0, 0, 0, 0.6);
+}
+canvas {
+    border: 1px solid #999;
+}
+.canvas-container {
+    margin:0 auto ;
+}
 .nav-sm .container.body .left_col {
   width: 70px;
   padding: 0;

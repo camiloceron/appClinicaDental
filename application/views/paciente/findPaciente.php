@@ -10,39 +10,55 @@
                     <div class="input-group">
                         <input type="number"  class="form-control" name="txtBuscar" placeholder="Indentificación" min="0" max="9999999999999" required="true">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit" id="btnBuscarP">Buscar!</button>
+                            <button class="btn btn-default" type="submit" id="btnBuscarP">Buscar</button>
                         </span>
                     </div>
                 </div>            
             </form>
         </div>
     </div>
-    <div class="col-md-12 col-sm-12 col-xs-12" align="center">
-        <?php if (isset($error)): ?>
+    <div class="col-md-6 col-md-offset-3">
+        <?php if ($this->session->flashdata('mensaje')): ?>
             <div class="alert alert-success" id="msgFindP">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <div align="center">
-                    <?php echo $error ?>
+                    <i class="fa fa-check-circle fa-2x" aria-hidden="true"></i>&nbsp;
+                    <?php echo $this->session->flashdata('mensaje'); ?>
                 </div>
             </div>
         <?php endif; ?>
     </div>
-    <div class="col-md-12 col-sm-12 col-xs-12">        
-        <a id="btnVerHistorias"
-           class="btn btn-default"
-           href="#historias"
-           data-toggle="tooltip" data-placement="top" title="historia clinica del paciente">
-            <i class="fa fa-file-text-o"></i>&nbsp; Ver Historia Clinica
-        </a>
+    <?php foreach ($buscarPaciente as $row) { ?>
+    <div class="row">
+        <div class="col-lg-12">                        
+            <div class="btn-group btn-breadcrumb">
+                <a href="<?php echo base_url('paciente/index/') ?>" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+                <a class="btn btn-default" disabled
+                    data-toggle="tooltip" data-placement="top" title="Ver datos del paciente">
+                    <i class="fa fa-male"></i>&nbsp; Paciente
+                </a>
+                <a href="<?php echo base_url('historiaClinica/findHistoria/' . $row->id_paciente) ?>" class="btn btn-default"
+                   data-toggle="tooltip" data-placement="top" title="Ver historias clinicas del paciente">
+                   <i class="fa fa-file-text-o"></i>&nbsp; Historias Clinicas
+                </a>
+                <a href="<?php echo base_url('tratamiento/findTratamientos/' . $row->id_paciente) ?>" class="btn btn-default"
+                   data-toggle="tooltip" data-placement="top" title="Ver tratamientos del paciente">
+                   <i class="fa fa-medkit" aria-hidden="true"></i>&nbsp; Tratamientos
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
         <a id="btnEditarP"
            class="btn btn-warning pull-right"
-           data-toggle="tooltip" data-placement="top" title="habilitar campos para editar Paciente">                    
-            <i class="fa fa-edit"></i>&nbsp;Editar Paciente
+           data-toggle="tooltip" data-placement="top" title="habilitar campos para editar Paciente">
+            <i class="fa fa-edit fa-lg"></i>&nbsp;Editar Paciente
         </a>
-        <br/><br/>
     </div>
-    <div class="clearfix"></div>
-    <?php foreach ($buscarPaciente as $row) { ?>
+    <br/><br/>
+
+        <div class="clearfix"></div>
+
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -430,10 +446,12 @@
 
                                 <div class="clearfix">
                                     <div class="pull-right">
-                                        <button type="submit" id="btnModificarP" class="btn btn-primary ">Modificar Paciente</button>&nbsp;
-                                        <a 
+                                        <button type="submit" id="btnModificarP" class="btn btn-primary " onclick="javascript:this.form.submit();this.disabled= true;">Modificar Paciente</button>&nbsp;
+                                        <a
+                                            id="btnCancelarPedit"
+                                            data-toggle="tooltip" data-placement="top" title="deshabilitar campos"
                                             class="btn btn-default "
-                                            href="<?php echo base_url('paciente/index') ?>">Cancelar</a>
+                                            >Cancelar</a>
                                     </div>
                                 </div>
 
@@ -444,95 +462,5 @@
                 </div>
             </div>
         </div><!-- fin row datosPaciente-->
-    <?php } ?>
-    <!--HISTORIAS CLINICAS-->
-    <br/>
-    <div class="row" id="historias">
-        <!--form historias clinicas-->
-        <div class="col-md-6 col-sm-12 col-xs-12">
-            <?php
-                $this->load->view($frmVerHistorias)
-            ?>
-        </div>
-        
-        <!-- form tratamiento-->
-        <div class="col-md-6 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_title">
-                    <h2><strong>TRATAMIENTO Y PRESUPUESTO</strong><br/><small>Ver y editar el tratamiento y presupuesto para el paciente</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>                        
-                        <li><a class="close-link"><i class="fa fa-close"></i></a>
-                        </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                    <br />
-                    <form class="form-horizontal form-label-left">
-
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-3">Date Mask</label>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
-                                <input type="text" class="form-control" data-inputmask="'mask': '99/99/9999'">
-                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-3">Phone mask</label>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
-                                <input type="text" class="form-control" data-inputmask="'mask' : '(999) 999-9999'">
-                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-3">Custom Mask</label>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
-                                <input type="text" class="form-control" data-inputmask="'mask': '99-999999'">
-                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-3">Serial Number</label>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
-                                <input type="text" class="form-control" data-inputmask="'mask' : '****-****-****-****-****-***'">
-                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-3">TaxID Mask</label>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
-                                <input type="text" class="form-control" data-inputmask="'mask' : '99-99999999'">
-                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-3">Credit Card Mask</label>
-                            <div class="col-md-9 col-sm-9 col-xs-9">
-                                <input type="text" class="form-control" data-inputmask="'mask' : '9999-9999-9999-9999'">
-                                <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
-                            </div>
-                        </div>
-                        <div class="ln_solid"></div>
-
-                        <div class="form-group">
-                            <div class="col-md-9 col-md-offset-3">
-                                <button type="submit" class="btn btn-primary">Cancel</button>
-                                <button type="submit" class="btn btn-success">Submit</button>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div> <!-- FIN form tratamiento-->
-
-    </div><!-- fin row HISTORIAS y TRATAMIENTO-->
-
+    <?php } ?>    
 </div> <!--fin div class-->
-
-<?php
-    $this->load->view($frmNewHistoria);
-    $this->load->view($frmEditHistoria);
-?>

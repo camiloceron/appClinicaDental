@@ -6,16 +6,13 @@ class Model_Paciente extends CI_Model {
         parent::__construct();
         $this->load->database();        
     }
-    
-    //funcion select en sql
+        
     public function listaPacientes(){
-        $query = $this->db->query("select * from paciente");
-        //retornar datos de la tabla
+        $query = $this->db->query("select * from paciente");        
         return $query->result();
     }
     
     public function insertPaciente($arrayDatos){        
-        
         $this->db->insert('paciente',$arrayDatos);        
     }
     
@@ -26,6 +23,16 @@ class Model_Paciente extends CI_Model {
     
     public function buscarPaciente($identificacion){
         $query = $this->db->query("select * from paciente where identificacion =".$identificacion);
+        if($query->num_rows()>0){
+            return $query->result(); 
+        }
+        else{
+            FALSE;
+        }
+    }
+    
+    public function buscarPacienteId($id){
+        $query = $this->db->query("select * from paciente where id_paciente =".$id);
         if($query->num_rows()>0){
             return $query->result(); 
         }

@@ -1,3 +1,41 @@
+<div class="page-title">
+    <div class="title_left">
+        <h3 class="page-header">HISTORIAS CLINICAS DEL PACIENTE:<br>
+            <small><strong>Nombre: <?php echo $nombres?>. <br>Cédula: <?php echo $identificacion?></strong></small>
+        </h3><br/>
+    </div>    
+</div>
+<div class="col-md-6 col-md-offset-3">
+    <?php if ($this->session->flashdata('mensaje')): ?>
+        <div class="alert alert-success" id="msgHistoria">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <div align="center">
+                <i class="fa fa-check-circle fa-2x" aria-hidden="true"></i>&nbsp;
+                <?php echo $this->session->flashdata('mensaje'); ?>
+            </div>
+        </div>                    
+    <?php endif; ?>    
+</div>
+<div class="row">
+    <div class="col-lg-12">                        
+        <div class="btn-group btn-breadcrumb">
+            <a href="<?php echo base_url('paciente/index/') ?>" class="btn btn-default"><i class="glyphicon glyphicon-home"></i></a>
+            <a class="btn btn-default"
+                href="<?php echo base_url('paciente/findPaciente/'.$identificacion) ?>"
+                data-toggle="tooltip" data-placement="top" title="Ver datos del paciente">
+                <i class="fa fa-male"></i>&nbsp; Paciente
+            </a>
+            <a href="" class="btn btn-default" disabled
+               data-toggle="tooltip" data-placement="top" title="Ver historias clinicas del paciente">
+               <i class="fa fa-file-text-o"></i>&nbsp; Historias Clinicas
+            </a>
+            <a class="btn btn-default" href="<?php echo base_url('tratamiento/findTratamientos/'.$id_paciente) ?>"
+               data-toggle="tooltip" data-placement="top" title="Ver tratamientos del paciente">
+               <i class="fa fa-medkit" aria-hidden="true"></i>&nbsp; Tratamientos
+            </a>
+        </div>
+    </div>
+</div><br><br>
 <div class="x_panel">
     <div class="x_title">
         <h2><strong>HISTORIA CLINICA</strong><br/><small>Ver y editar Historia Clinica del paciente</small></h2>
@@ -12,17 +50,7 @@
     <div class="x_content">
         <br />
         <form  id="formHistoria" method="POST" action="">                        
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <?php if (isset($msgHistoria)): ?>
-                        <div class="alert alert-success" id="msgHistoria">
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                            <div align="center">
-                                <?php echo $msgHistoria ?>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                </div>
+            <div class="row">                
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <a
                         class="btn btn-primary"
@@ -31,7 +59,8 @@
                         <i class="fa fa-plus"></i>&nbsp;&nbsp;Nueva Historia Clínica</a><br><br>
                 </div>                            
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <table class="table table-bordered">
+                    <?php if (isset($historias) && $historias != NULL) { ?>
+                    <table id="example" class="table table-bordered table-hover">
                         <thead>
                             <tr class="active">
                                 <th>Fecha</th>
@@ -42,14 +71,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (isset($historias) && $historias != NULL) {
-                                foreach ($historias as $row) {
+                            
+                              <?php  foreach ($historias as $row) {
                                     ?>
                                     <tr>
                                         <td><?php echo $row->fecha ?></td>
                                         <td><?php echo $row->procedimiento ?></td>
-                                        <td><?php echo $row->firma_paciente ?></td>
-                                        <td><?php echo $row->firma_odontologo ?></td>
+                                        <td><img width="120" height="80" src="<?php echo base_url($row->firma_paciente) ?>" class="img-responsive"></td>
+                                        <td><img width="120" height="80" src="<?php echo base_url($row->firma_odontologo) ?>" class="img-responsive"></td>
                                         <td>
                                             <a 
                                                 class="btn btn-sm btn-warning"
@@ -63,9 +92,24 @@
                                             </a>
                                         </td>
                                     </tr> 
-                                <?php }
+                                <?php
+                                }
                             }
-                            ?>                                                
+                            else{
+                            ?> 
+                                <div class="row">
+                                    <div class="col-md-6 col-md-offset-3"> 
+                                        <br><br>
+                                        <div class="alert alert-warning" id="msgBuscarP">
+                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                            <div align="center">
+                                                <i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;
+                                                El paciente no tiene Historias Clinicas registradas
+                                            </div>
+                                        </div>                
+                                    </div>
+                                </div>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>                    
@@ -73,3 +117,8 @@
         </form>
     </div>
 </div>
+<?php
+    $this->load->view($frmNewHistoria);
+    $this->load->view($frmEditHistoria);
+    $this->load->view($frmFirmar);
+?>

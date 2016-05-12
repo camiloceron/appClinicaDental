@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => 'mysql',
-	'database' => 'bdbocca',
+	'hostname' => 'elai.com.co',        
+	'username' => 'elaicom_ubocca',
+	'password' => 'appbocca2015',
+	'database' => 'elaicom_bdbocca',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

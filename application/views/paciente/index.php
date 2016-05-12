@@ -19,18 +19,16 @@
 
         <div class="clearfix"></div>
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-
-                <?php if (isset($error)): ?>
+            <div class="col-xs-12 col-sm-12">
+                <?php if ($this->session->flashdata('mensaje')): ?>
                     <div class="alert alert-danger" id="msgBuscarP">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         <div align="center">
                             <i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;
-                            <?php echo $error ?>
+                            <?php echo $this->session->flashdata('mensaje'); ?>
                         </div>
                     </div>
-                <?php endif; ?>                    
-
+                <?php endif; ?>
             </div>
         </div>      
     </form>

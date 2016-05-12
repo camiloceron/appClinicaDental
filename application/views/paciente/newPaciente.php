@@ -5,6 +5,15 @@
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <div class="list-errors" align="center"></div>                    
         </div>
+        <?php if ($this->session->flashdata('error')): ?>
+            <div class="alert alert-danger" id="msgNewPServidor">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <div align="center">
+                    <i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;
+                    <?php echo $this->session->flashdata('error'); ?>
+                </div>
+            </div>
+        <?php endif; ?>
       <div class="title_left">
         <h3 class="page-header">Nuevo Paciente <br/>
             <small>Desde esta opción puede crear un nuevo Paciente</small>
@@ -37,7 +46,7 @@
                         <label for="" class="form-label">Cual</label>
                         <input name="txtDescTipoPaciente" type="text" class="form-control" maxlength="150">
                     </div>               
-                    <div class="col-xs-6 col-sm-6 col-md-4  leftspan" id="three">
+                    <div class="col-xs-12 col-sm-12 col-md-4  leftspan" id="three">
                         <label for="" class="form-label">Fecha</label>
                         <input name="fechaIngreso" type="date" class="form-control" min="1910-01-01" max="2100-12-31" value="<?php echo date("Y-m-d");?>">
                     </div>
@@ -46,15 +55,15 @@
 
                     <div class="col-xs-6 col-sm-6 col-md-3 leftspan" id="five">
                         <label for="" class="form-label">Primer apellido</label>
-                        <input name="txtApellido1" type="text" class="form-control" placeholder="primer apellido" required maxlength="45">
+                        <input name="txtApellido1" type="text" class="form-control" placeholder="Primer apellido" required maxlength="45">
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-3 leftspan" id="six">
                         <label for="" class="form-label">Segundo apellido</label>
-                        <input name="txtApellido2" type="text" class="form-control" placeholder="segundo apellido" maxlength="45">                                  
+                        <input name="txtApellido2" type="text" class="form-control" placeholder="Segundo apellido" maxlength="45">                                  
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-3 leftspan" id="seven">
                         <label for="" class="form-label">Nombres</label>
-                        <input name="txtNombres" type="text" class="form-control" placeholder="nombres" required maxlength="100">
+                        <input name="txtNombres" type="text" class="form-control" placeholder="Nombres" required maxlength="100">
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-3 rightspan" id="eight">
                         <label for="" class="form-label">Doc. Identificación</label>
@@ -90,7 +99,7 @@
                         <label for="" class="form-label">Municipio</label>
                         <input name="txtMunicipio" type="text" class="form-control" placeholder="Municipio" maxlength="50">
                     </div>               
-                    <div class="col-xs-6 col-sm-6 col-md-4  leftspan" id="diecisite">
+                    <div class="col-xs-12 col-sm-12 col-md-4  leftspan" id="diecisite">
                         <label for="" class="form-label"><i class="fa fa-envelope fa-lg" aria-hidden="true"></i></label>
                         <input name="txtEmail" type="text" class="form-control" placeholder="Email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" maxlength="50">
                     </div>
@@ -124,7 +133,7 @@
                         <label for="" class="form-label">Parentesco</label>
                         <input name="txtParentesco" type="text" class="form-control" placeholder="Parentesco" maxlength="45">
                     </div>               
-                    <div class="col-xs-6 col-sm-6 col-md-4  leftspan" id="three">
+                    <div class="col-xs-12 col-sm-12 col-md-4  leftspan" id="three">
                         <label for="" class="form-label">Teléfono</label>
                         <input name="txtTelefonoAcudiente" type="text" class="form-control" placeholder="Teléfono" maxlength="15">
                     </div>
@@ -143,7 +152,7 @@
 
                     <div class="col-xs-12"><hr></div>
 
-                    <div class="col-xs-6 col-sm-6 col-md-12  leftspan" id="three">                                  
+                    <div class="col-xs-12 col-sm-12 col-md-12  leftspan" id="three">                                  
                         <label for="">Motivo de Consulta</label>
                         <textarea class="form-control" rows="2" name="txtMotivoConsulta" maxlength="800"></textarea>
                     </div>
@@ -151,7 +160,7 @@
                     <div class="col-xs-12"><hr class="grueso"/></div>
 
                     <div class="col-xs-12 col-sm-12 col-md-12  leftspan" id="three">
-                        <label for=""><h4><strong>ANAMNESIS:</strong></h4></label>
+                        <label for=""><h4><strong>ANAMNÉSIS:</strong></h4></label>
                         <table class="table">
                           <thead>
                             <tr>
@@ -256,7 +265,7 @@
                     <div class="col-xs-12"><hr class="grueso"/></div>
 
                     <div class="col-xs-12 col-sm-12 col-md-12  leftspan" id="30">
-                        <label for=""><h4><strong>EXAMEN ESTOMATOLOGICO:</strong></h4></label><br/>
+                        <label for=""><h4><strong>EXÁMEN ESTOMATOLÓGICO:</strong></h4></label><br/>
                         <label for="">&nbsp;&nbsp; A. TEJIDOS BLANDOS</label> <br/>
                         <table class="table table-bordered">
                           <thead>
@@ -403,7 +412,7 @@
                     
                     <div class="clearfix">
                         <div class="pull-right">
-                            <button type="submit" id="btnGuardar" class="btn btn-primary " >Guardar Paciente</button>
+                            <button type="submit" id="btnGuardar" class="btn btn-primary " disabled="true" onclick="javascript:this.form.submit();this.disabled= true;">Guardar Paciente</button>
                             <a 
                                 class="btn btn-default "
                                 href="<?php echo base_url('paciente/index')?>">Cancelar</a>

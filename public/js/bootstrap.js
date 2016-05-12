@@ -1265,7 +1265,7 @@ if (typeof jQuery === 'undefined') {
   'use strict';
 
   // TOOLTIP PUBLIC CLASS DEFINITION
-  // ===============================
+  // ===============================  
 
   var Tooltip = function (element, options) {
     this.type       = null
